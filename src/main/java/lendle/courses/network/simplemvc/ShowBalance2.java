@@ -32,20 +32,21 @@ public class ShowBalance2 extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String id = request.getParameter("id");
-        BankCustomer bankcustomer=BankCustomer.getCustomer(id);
-        if(bankcustomer==null){
-            request.getRequestDispatcher("/WEB-INF/bank-account/UnknownCustomer.jsp");
-        } else {  
+        BankCustomer bankcustomer = BankCustomer.getCustomer(id);
+        if (bankcustomer == null) {
+            request.getRequestDispatcher("/WEB-INF/bank-account/UnknownCustomer.jsp").forward(request, response);
+        } else {
             request.setAttribute("customer", bankcustomer);
-            if(bankcustomer.getBalance()<0){
-               request.getRequestDispatcher("/WEB-INF/bank-account/NegativeBalance.jsp");
-            }else if(bankcustomer.getBalance()>10000){
-               request.getRequestDispatcher("/WEB-INF/bank-account/HighBalance.jsp");
-            }else{
-                request.getRequestDispatcher("/WEB-INF/bank-account/NormalBalance.jsp");
-
+            if (bankcustomer.getBalance() < 0) {
+                request.getRequestDispatcher("/WEB-INF/bank-account/NegativeBalance.jsp").forward(request, response);
+            } else if (bankcustomer.getBalance() > 10000) {
+                request.getRequestDispatcher("/WEB-INF/bank-account/HighBalance.jsp").forward(request, response);
+                System.out.println("123123");
+            } else {
+                request.getRequestDispatcher("/WEB-INF/bank-account/NormalBalance.jsp").forward(request, response);
             }
-    }}
+        }
+    }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -85,6 +86,5 @@ public class ShowBalance2 extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
-
 
 }
